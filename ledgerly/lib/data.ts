@@ -101,6 +101,15 @@ export async function getInvoice(id: string) {
   });
 }
 
+export async function updateCustomerEmail(id: string, email: string) {
+  const existing = await prisma.customer.findUnique({ where: { id } });
+  if (!existing) return null;
+  return prisma.customer.update({
+    where: { id },
+    data: { email },
+  });
+}
+
 export async function getDisputes(filters?: { status?: string }) {
   const disputes = await prisma.dispute.findMany({
     include: disputeInclude,
